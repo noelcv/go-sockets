@@ -46,10 +46,17 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		fmt.Printf("Message Received: %s\n", msg.Greeting)
+		SendMessage("Hello Client")
 	}
 	
 }
 
+func SendMessage(msg string) {
+	err := wsConn.WriteMessage(websocket.TextMessage, []byte(msg))
+	if err != nil {
+		fmt.Printf("error sending message %s\n", err.Error())
+	}
+}
 
 func main() {
 	
