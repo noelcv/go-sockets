@@ -1,4 +1,4 @@
-import { useState, FunctionComponent, MouseEvent } from 'react'
+import { useState, useEffect, FunctionComponent, MouseEvent } from 'react'
 import { msgEncoder } from './utils/msgEncoder';
 import './App.css'
 
@@ -10,16 +10,18 @@ const App: FunctionComponent = () => {
   
   const submitHandler = (e:MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const objMsg = msgEncoder(message);
-    console.log(objMsg, 'obj msg')
+    const stringifiedMsg = msgEncoder(message);
+    //TODO: send message to server;
     setMessage('');
   }
+  
+  
 
   return (
     <div className="App">
       <h1>WebSocket Chat</h1>
       <form onSubmit={submitHandler}>
-        <input type="text" placeholder="Type your message" className="input" onChange={(e) => setMessage(e.target.value)} />
+        <input type="text" placeholder="Type your message" value={message} className="input" onChange={(e) => setMessage(e.target.value)} />
         <button>Send Message</button>
       </form>
     </div>
