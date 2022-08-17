@@ -6,7 +6,7 @@ import './App.css'
 
 const App: FunctionComponent = () => {
   const [message, setMessage] = useState<string>('');
-  const [serverMessage, setServerMessage] = useState<string>('');
+  const [serverMessages, setServerMessages] = useState<string[]>([]);
   const socketRef: MutableRefObject< WebSocket | null> = useRef(null);
   
   
@@ -21,11 +21,12 @@ const App: FunctionComponent = () => {
     socketRef.current = new WebSocket('ws://localhost:8080/socket');
     console.log(socketRef.current, "socketRef.current")
     socketRef.current.onmessage = (msg) => {
-      setServerMessage(msg.data);
-      console.log(msg.data, "msg.data")
+      console.log(msg, "msg.data")
+      setServerMessages(serverMessages => [...serverMessages, msg.data])
+      console.log(serverMessages, "updated serverMessages");
     }
   
-  }, []);
+  }, [serverMessages]);
 
 
   return (
@@ -37,7 +38,12 @@ const App: FunctionComponent = () => {
       </form>
       <div className="server-messages">
         <h3>Message from the Server</h3>
-        <p className="server-message">{serverMessage}</p>
+        {serverMessages.map((msg, index) => {
+          return <p key={index}>{msg}</p>
+        }
+        )}
+        
+          
       </div>
     </div>
   )
