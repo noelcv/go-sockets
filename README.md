@@ -1,6 +1,6 @@
 # Go-WebSockets-React-Vite
 
-Quick exercise to test bidirectional communication between a Go Backend and a React Frontend bootstrapped using Websockets.
+Full-stack web-app to test bidirectional communication between a Go Backend and a React Frontend using Websockets.
 
 
 ## GO Backend
