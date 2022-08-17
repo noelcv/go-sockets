@@ -25,7 +25,7 @@ const App: FunctionComponent = () => {
       setServerMessages(serverMessages => [...serverMessages, msg.data])
       console.log(serverMessages, "updated serverMessages");
     }
-  
+    
   }, [serverMessages]);
 
 
