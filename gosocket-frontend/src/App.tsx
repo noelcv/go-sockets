@@ -1,4 +1,4 @@
-import { useState, useEffect, FunctionComponent, MouseEvent } from 'react'
+import { useState, useEffect, useRef, FunctionComponent, MouseEvent, MutableRefObject } from 'react'
 import { msgEncoder } from './utils/msgEncoder';
 import './App.css'
 
@@ -6,16 +6,22 @@ import './App.css'
 
 const App: FunctionComponent = () => {
   const [message, setMessage] = useState<string>('');
+  const socketRef: MutableRefObject< WebSocket | null> = useRef(null);
   
   
   const submitHandler = (e:MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     const stringifiedMsg = msgEncoder(message);
-    //TODO: send message to server;
+    socketRef.current?.send(stringifiedMsg);
     setMessage('');
   }
   
+  useEffect(() => {
+    socketRef.current = new WebSocket('ws://localhost:8080/socket');
+    console.log(socketRef.current, "socketRef.current")
   
+  }, []);
+
 
   return (
     <div className="App">

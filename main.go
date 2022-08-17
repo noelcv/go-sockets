@@ -46,7 +46,7 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		fmt.Printf("Message Received: %s\n", msg.Greeting)
-		SendMessage("Hello Client")
+		// SendMessage("Hello Client")
 	}
 	
 }
