@@ -6,6 +6,7 @@ import './App.css'
 
 const App: FunctionComponent = () => {
   const [message, setMessage] = useState<string>('');
+  const [serverMessage, setServerMessage] = useState<string>('');
   const socketRef: MutableRefObject< WebSocket | null> = useRef(null);
   
   
@@ -19,6 +20,10 @@ const App: FunctionComponent = () => {
   useEffect(() => {
     socketRef.current = new WebSocket('ws://localhost:8080/socket');
     console.log(socketRef.current, "socketRef.current")
+    socketRef.current.onmessage = (msg) => {
+      setServerMessage(msg.data);
+      console.log(msg.data, "msg.data")
+    }
   
   }, []);
 
@@ -30,6 +35,10 @@ const App: FunctionComponent = () => {
         <input type="text" placeholder="Type your message" value={message} className="input" onChange={(e) => setMessage(e.target.value)} />
         <button>Send Message</button>
       </form>
+      <div className="server-messages">
+        <h3>Message from the Server</h3>
+        <p className="server-message">{serverMessage}</p>
+      </div>
     </div>
   )
 }

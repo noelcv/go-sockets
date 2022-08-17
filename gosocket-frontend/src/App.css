@@ -9,3 +9,10 @@
   width: 100%;
   height: 5rem;
 }
+
+
+.server-message {
+  color: #fff;
+  font-size: 2em;
+  font-weight: bold;
+}

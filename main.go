@@ -43,20 +43,20 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 		err := wsConn.ReadJSON(&msg) 
 		if err != nil {
 			fmt.Printf("error reading JSON: %s\n", err.Error())
-			break
+			return
 		}
 		fmt.Printf("Message Received: %s\n", msg.Greeting)
-		// SendMessage("Hello Client")
+		
+		
+		if err = wsConn.WriteJSON(msg.Greeting); err != nil {
+			fmt.Println(err)
+			return
+		}
+		
 	}
 	
 }
 
-func SendMessage(msg string) {
-	err := wsConn.WriteMessage(websocket.TextMessage, []byte(msg))
-	if err != nil {
-		fmt.Printf("error sending message %s\n", err.Error())
-	}
-}
 
 func main() {
 	
